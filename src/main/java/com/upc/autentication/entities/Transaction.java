@@ -1,39 +1,45 @@
 package com.upc.autentication.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name= "transaction_table")
-
 public class Transaction {
+
     @Id
-    @Column(name = "user_code")
-    private Long user_code;
-    double price;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "transaction_code")
+    private Long code;
+    double amount;
     int num_days;
     String state;
     String date;
     String hour;
-    String typePyament;
-    String shop;
+    String type_payment;
+    String super_market;
+    @ManyToOne
+    @JoinColumn(name = "user_code")
+    private User user;
+    @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<TransactionDetails> transaccionDetalles;
 
-    public Long getUserCode() {
-        return user_code;
+    public Long getCode() {
+        return code;
     }
 
-    public void setUsercode(Long user_code) {
-        this.user_code = user_code;
+    public void setCode(Long code) {
+        this.code = code;
     }
 
-    public double getPrice() {
-        return price;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     public int getNum_days() {
@@ -68,19 +74,35 @@ public class Transaction {
         this.hour = hour;
     }
 
-    public String getTypePyament() {
-        return typePyament;
+    public String getType_payment() {
+        return type_payment;
     }
 
-    public void setTypePyament(String typePyament) {
-        this.typePyament = typePyament;
+    public void setType_payment(String type_payment) {
+        this.type_payment = type_payment;
     }
 
-    public String getShop() {
-        return shop;
+    public String getSuper_market() {
+        return super_market;
     }
 
-    public void setShop(String shop) {
-        this.shop = shop;
+    public void setSuper_market(String super_market) {
+        this.super_market = super_market;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<TransactionDetails> getTransaccionDetalles() {
+        return transaccionDetalles;
+    }
+
+    public void setTransaccionesDetalles(List<TransactionDetails> transaccionDetalles) {
+        this.transaccionDetalles = transaccionDetalles;
     }
 }

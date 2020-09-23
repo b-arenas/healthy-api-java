@@ -1,7 +1,9 @@
 package com.upc.autentication.entities;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -10,13 +12,18 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_code")
     private Long code;
-
     private String email;
     private String password;
     private String name;
     private String lastname;
     private int role;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Preferences preferences;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Transaction> transacciones;
 
     public Long getCode() {
         return code;
@@ -64,5 +71,13 @@ public class User {
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+    public List<Transaction> getTransacciones() {
+        return transacciones;
+    }
+
+    public void setTransacciones(List<Transaction> transacciones) {
+        this.transacciones = transacciones;
     }
 }

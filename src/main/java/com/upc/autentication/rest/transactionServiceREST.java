@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
@@ -14,9 +17,10 @@ public class transactionServiceREST {
     private BusinessTransaction business;
 
     @GetMapping("/transaction/{code}")
-    public Transaction getTransaction(@PathVariable(value = "code") Long code){
+    public List<Transaction> getTransaction(@PathVariable(value = "code") Long code){
         return business.getTransaction(code);
     }
+
     @PostMapping("/transaction")
     public String createTransaction(@RequestBody Transaction transaction){
         String tranMessage;

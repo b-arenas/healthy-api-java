@@ -6,8 +6,8 @@ import javax.persistence.*;
 @Table(name = "preferences_table")
 public class Preferences {
     @Id
-    @Column(name = "user_code")
-    private Long user_code;
+    @Column(name = "code")
+    private Long code;
     private String numero_celular;
     private double peso;
     private double talla;
@@ -16,13 +16,16 @@ public class Preferences {
     private short restricciones;
     private short frecuencia_actividad;
     private short objetivo;
+    @OneToOne
+    @MapsId
+    private User user;
 
-    public Long getUserCode() {
-        return user_code;
+    public Long getCode() {
+        return code;
     }
 
-    public void setUserCode(Long user_code) {
-        this.user_code = user_code;
+    public void setCode(Long code) {
+        this.code = code;
     }
 
     public String getNumero_celular() {
@@ -87,5 +90,13 @@ public class Preferences {
 
     public void setObjetivo(short objetivo) {
         this.objetivo = objetivo;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

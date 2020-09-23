@@ -2,26 +2,38 @@ package com.upc.autentication.entities;
 
 import javax.persistence.*;
 
-
 @Entity
-@Table(name = "select_days")
-public class Day {
+@Table(name = "transaction_details_table")
+public class TransactionDetails {
     @Id
-    @Column(name = "user_code")
-    private Long user_code;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long code;
+    private Long recipe_code;
     private boolean monday;
     private boolean tuesday;
-    private boolean wendnesday;
+    private boolean wednesday;
     private boolean thursday;
     private boolean friday;
     private boolean saturday;
     private boolean sunday;
+    @ManyToOne
+    @JoinColumn(name = "transaction_code")
+    private Transaction transaction;
 
-    public Long getUserCode() {
-        return user_code;
+    public Long getCode() {
+        return code;
     }
-    public void setUserCode(Long user_code) {
-        this.user_code = user_code;
+
+    public void setCode(Long code) {
+        this.code = code;
+    }
+
+    public Long getRecipe_code() {
+        return recipe_code;
+    }
+
+    public void setRecipe_code(Long recipe_code) {
+        this.recipe_code = recipe_code;
     }
 
     public boolean isMonday() {
@@ -40,12 +52,12 @@ public class Day {
         this.tuesday = tuesday;
     }
 
-    public boolean isWendnesday() {
-        return wendnesday;
+    public boolean isWednesday() {
+        return wednesday;
     }
 
-    public void setWendnesday(boolean wendnesday) {
-        this.wendnesday = wendnesday;
+    public void setWednesday(boolean wendnesday) {
+        this.wednesday = wendnesday;
     }
 
     public boolean isThursday() {
@@ -78,5 +90,13 @@ public class Day {
 
     public void setSunday(boolean sunday) {
         this.sunday = sunday;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
     }
 }

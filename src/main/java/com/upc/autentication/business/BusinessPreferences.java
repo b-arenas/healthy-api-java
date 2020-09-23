@@ -18,7 +18,7 @@ public class BusinessPreferences {
     private UserRepository userRepository;
 
     public String createPreferences(Preferences preferences){
-        List<User> listUsers = userRepository.findUserBy(preferences.getUserCode());
+        List<User> listUsers = userRepository.findUserBy(preferences.getCode());
         if(listUsers.size() == 0)
             return "No existe usuario";
 
