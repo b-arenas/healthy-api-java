@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,6 +23,12 @@ public class BusinessTransaction {
     private UserRepository userRepository;
 
     public String createTransaction(Transaction transaction){
+        Date date = new Date();
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat hourFormatter = new SimpleDateFormat("HH:mm:ss");
+
+        transaction.setDate(dateFormatter.format(date));
+        transaction.setHour(hourFormatter.format(date));
 
         if(transaction.getTransaccionDetalles().size() == 0){
             return "No hay detalles de la transacción";
@@ -43,7 +51,7 @@ public class BusinessTransaction {
             //Listar Transacciones por días
             TransactionDetails transactionDetailsAux = ObtenerTransactionDetail(transaction);
             List<TransactionDetails> listTransactionByDays =
-                    transactionRepository.findTransactionsByDays(listTransaction.get(0).getCode());
+                    transactionRepository.findTransactionsByDays(listTransaction.get(0).getUser().getCode());
 
             for (TransactionDetails x: listTransactionByDays) {
                 if(transactionDetailsAux.isMonday()){
